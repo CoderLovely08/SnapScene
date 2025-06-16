@@ -1,7 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -28,23 +27,18 @@ model SystemUser {
 }
 
 model Wallpaper {
-  id           String    @id @default(uuid())
-  title        String
-  imageUrl     String    // S3 URL or CloudFront URL
-  category     String    @default("Other") // Simple string: "Nature", "Urban", etc.
-  downloadCount Int      @default(0)
-  uploadedAt   DateTime  @default(now())
-  uploader     SystemUser @relation(fields: [uploaderId], references: [id])
-  uploaderId   Int
-  tags         Tag[]     @relation("WallpaperTags")
-  comments     Comment[]
-  likes        Like[]
-}
-
-model Tag {
-  id         String      @id @default(uuid())
-  name       String      @unique
-  wallpapers Wallpaper[] @relation("WallpaperTags")
+  id            String     @id @default(uuid())
+  title         String
+  description   String?
+  imageUrl      String
+  quality       String     @default("HD") // "HD", "4K", "8K"
+  category      String     @default("Other") // "Nature", "Urban", etc.
+  downloadCount Int        @default(0)
+  uploadedAt    DateTime   @default(now())
+  uploader      SystemUser @relation(fields: [uploaderId], references: [id])
+  uploaderId    Int
+  comments      Comment[]
+  likes         Like[]
 }
 
 model Comment {
