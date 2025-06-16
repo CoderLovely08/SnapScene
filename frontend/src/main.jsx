@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { ErrorBoundary } from "react-error-boundary";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +30,7 @@ createRoot(document.getElementById("root")).render(
           newestOnTop={true}
           limit={3}
         />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </Provider>
   </ErrorBoundary>

@@ -19,6 +19,10 @@ export const apiRoutes = {
     UPDATE: (id) => `/users/${id}`,
     DELETE: (id) => `/users/${id}`,
   },
+  WALLPAPERS: {
+    GET_ALL: "/wallpapers/get-all",
+    DOWNLOAD: "/wallpapers/download",
+  },
 };
 
 export const QUERY_KEYS = {
@@ -29,5 +33,8 @@ export const QUERY_KEYS = {
   },
   USERS: {
     GET_ALL: "users",
+  },
+  WALLPAPERS: {
+    GET_ALL: "wallpapers",
   },
 };
