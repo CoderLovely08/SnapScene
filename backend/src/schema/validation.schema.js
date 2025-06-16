@@ -19,7 +19,6 @@ export class ValidationSchema {
     { field: 'fullName', type: VALIDATION_TYPES.PURE_NAME, required: true },
     { field: 'email', type: VALIDATION_TYPES.EMAIL, required: true },
     { field: 'password', type: VALIDATION_TYPES.PASSWORD, required: true },
-    { field: 'userType', type: VALIDATION_TYPES.INTEGER, required: true },
   ];
 
   // Request Password Reset Schema

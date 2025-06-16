@@ -1,26 +1,26 @@
-import Navbar from "@/components/core/Navbar";
-import LoadingSpinner from "@/components/custom/utils/LoadingSpiner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { useLogin } from "@/hooks/auth/useLogin";
 import { routes } from "@/utils/app.constants";
-import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Eye, EyeOff, Lock } from "lucide-react";
+import LoadingSpinner from "@/components/custom/utils/LoadingSpiner";
+import { useRegister } from "@/hooks/auth/useLogin";
+import Navbar from "@/components/core/Navbar";
+import { Separator } from "@/components/ui/separator";
 
-export default function LoginForm() {
-  const { adminLoginForm, onSubmit, isSignInPending } = useLogin();
+export default function RegisterPage() {
+  const { userRegisterForm, onSubmit, isRegisterPending } = useRegister();
   const [passwordVisible, setPasswordVisible] = useState(false);
-
   return (
     <div className="min-h-full">
       <Navbar />
@@ -29,37 +29,54 @@ export default function LoginForm() {
           {/* Card */}
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 w-full max-w-md border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Sign In</h2>
+              <h2 className="text-2xl font-bold text-white">Register</h2>
             </div>
-            <Form {...adminLoginForm}>
+            <Form {...userRegisterForm}>
               <form
-                onSubmit={adminLoginForm.handleSubmit(onSubmit)}
-                className="space-y-3 max-w-full mx-auto"
+                onSubmit={userRegisterForm.handleSubmit(onSubmit)}
+                className="space-y-2"
               >
                 <FormField
-                  control={adminLoginForm.control}
+                  control={userRegisterForm.control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John Wick" type="text" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={userRegisterForm.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="email@exmaple.com"
+                          placeholder="john@wick.com"
                           type="email"
                           {...field}
                         />
                       </FormControl>
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
                 <FormField
-                  control={adminLoginForm.control}
+                  control={userRegisterForm.control}
                   name="password"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
-                      <FormControl className="relative">
+                      <FormControl>
                         <div className="relative">
                           <Input
                             placeholder="********"
@@ -79,26 +96,27 @@ export default function LoginForm() {
                           </button>
                         </div>
                       </FormControl>
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" disabled={isSignInPending}>
-                  {isSignInPending ? "Signing in..." : "Sign in"}
-                  {isSignInPending && (
+
+                <Button type="submit" disabled={isRegisterPending}>
+                  {isRegisterPending ? "Signing up..." : "Register"}
+                  {isRegisterPending && (
                     <LoadingSpinner spinnerColor="text-white" />
                   )}
                 </Button>
               </form>
             </Form>
-
             <div className="mt-4 text-center">
               <Separator className="bg-white/20 my-2" />
               <p className="text-white/60">
-                Don't have an account?{" "}
-                <Link to={routes.AUTH.REGISTER}>
+                Already have an account?{" "}
+                <Link to={routes.AUTH.LOGIN}>
                   <button className="text-purple-400 hover:text-purple-300 font-medium">
-                    Sign up
+                    Sign in
                   </button>
                 </Link>
               </p>

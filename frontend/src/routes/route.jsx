@@ -11,6 +11,7 @@ import AssignPermissions from "@/pages/Dashboard/RBAC/components/AssignPermissio
 import ViewAllUsers from "@/pages/Dashboard/RBAC/ViewAllUsers";
 import ErrorBoundaryLayout from "@/layout/ErrorBoundaryLayout";
 import InfiniteTable from "@/pages/Components/InfiniteTable";
+import RegisterPage from "@/pages/Auth/RegisterPage";
 
 export const applicationRouter = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ export const applicationRouter = createBrowserRouter([
       {
         path: routes.AUTH.LOGIN,
         element: <LoginForm />,
+      },
+
+      {
+        path: routes.AUTH.REGISTER,
+        element: <RegisterPage />,
       },
 
       {

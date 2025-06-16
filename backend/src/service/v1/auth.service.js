@@ -53,10 +53,9 @@ export class AuthService {
    * @param {string} email - The email of the user
    * @param {string} password - The password of the user
    * @param {string} fullName - The full name of the user
-   * @param {number} userTypeId - The user type id of the user
    * @returns {Promise<SystemUsersInfo>} The created system user
    */
-  static async createSystemUser(email, password, fullName, userTypeId) {
+  static async createSystemUser(email, password, fullName) {
     try {
       const hashedPassword = hashPassword(password);
 

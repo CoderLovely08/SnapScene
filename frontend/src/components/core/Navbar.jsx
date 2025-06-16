@@ -1,9 +1,12 @@
+import { selectUser } from "@/store/slices/auth.slice";
 import { routes } from "@/utils/app.constants";
 import { Search, Upload } from "lucide-react";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const user = useSelector(selectUser);
   return (
     <header className="sticky top-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,11 +39,15 @@ const Navbar = () => {
               <Upload className="h-5 w-5" />
               <span>Upload</span>
             </button>
-            <Link to={routes.AUTH.LOGIN}>
+            {user ? (
+              <div>Welcome {user.fullName}</div>
+            ) : (
+              <Link to={routes.AUTH.LOGIN}>
                 <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
                   Sign In
                 </button>
-            </Link>
+              </Link>
+            )}
           </div>
         </div>
       </div>

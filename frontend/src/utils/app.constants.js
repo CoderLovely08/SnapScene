@@ -17,7 +17,7 @@ export const routes = {
   },
   AUTH: {
     LOGIN: "/login",
-    REGISTER: "signup",
+    REGISTER: "/register",
   },
   DASHBOARD: {
     title: "Dashboard",

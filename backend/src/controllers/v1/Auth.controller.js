@@ -74,9 +74,9 @@ export class AuthController {
    */
   static async handlePostSystemUserRegistration(req, res) {
     try {
-      const { email, password, fullName, userType } = req.body;
+      const { email, password, fullName } = req.body;
 
-      const user = await AuthService.createSystemUser(email, password, fullName, userType);
+      const user = await AuthService.createSystemUser(email, password, fullName);
 
       return APIResponse.success(res, user, 'User registered successfully');
     } catch (error) {
