@@ -51,11 +51,24 @@ export const useLogout = () => {
     let confirmLogout = window.confirm("Are you sure you want to logout?");
 
     if (confirmLogout) {
-      dispatch(setUser(null));
-      navigate(routes.CORE.path);
-      toast.success("Logout successful");
+      logoutMutation();
     }
   };
+
+  const { mutate: logoutMutation, isPending: isLogoutPending } = useMutation({
+    mutationFn: () => handlePostRequest(apiRoutes.AUTH.LOGOUT),
+
+    onSuccess: () => {
+      dispatch(setUser(null));
+      navigate(routes.AUTH.LOGIN);
+      toast.success("Logout successful");
+    },
+
+    onError: (error) => {
+      toast.error(error?.message || "Logout failed");
+    },
+  });
+
   return { logutAdmin };
 };
 

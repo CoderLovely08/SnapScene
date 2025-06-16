@@ -1,45 +1,10 @@
 import React, { useState } from "react";
-import {
-  Heart,
-  Download,
-  MessageCircle,
-  Search,
-  User,
-  Upload,
-  Menu,
-  X,
-  Filter,
-  Grid,
-  Eye,
-  Calendar,
-  Tag,
-} from "lucide-react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Navbar from "@/components/core/Navbar";
-import WallpaperCard from "./components/WallpaperCard";
 import WallpaperGrid from "./components/WallpaperGrid";
+import UploadDialog from "@/components/core/UploadDialog";
 
 const LandingPage = () => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [likedImages, setLikedImages] = useState(new Set());
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const categories = ["All", "Nature", "Urban", "Abstract", "Space", "Minimal"];
-
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -63,14 +28,14 @@ const LandingPage = () => {
             <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
               Start Exploring
             </button>
-            <button className="border border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-all">
-              Upload Your Art
-            </button>
+            <UploadDialog>
+              <button className="border border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-all">
+                Upload Your Art
+              </button>
+            </UploadDialog>
           </div>
         </div>
       </section>
-
-      
 
       <WallpaperGrid
         likedImages={likedImages}

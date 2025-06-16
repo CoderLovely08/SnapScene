@@ -2,6 +2,7 @@ export const apiRoutes = {
   AUTH: {
     LOGIN: "/auth/system/login",
     REGISTER: "/auth/system/register",
+    LOGOUT: "/auth/system/logout",
   },
   CORE: {
     PERMISSIONS: {
@@ -22,6 +23,7 @@ export const apiRoutes = {
   WALLPAPERS: {
     GET_ALL: "/wallpapers/get-all",
     DOWNLOAD: "/wallpapers/download",
+    UPLOAD: "/wallpapers/create",
   },
 };
 

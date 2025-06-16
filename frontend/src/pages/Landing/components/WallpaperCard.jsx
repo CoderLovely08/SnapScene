@@ -2,8 +2,9 @@ import LoadingSpinner from "@/components/custom/utils/LoadingSpiner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useDownloadWallpaper } from "@/hooks/app/useWallpaper";
 import { getInitials, getTimedifference } from "@/utils/app.utils";
-import { Calendar, Download, Heart, MessageCircle } from "lucide-react";
+import { Calendar, Download, Heart, Share2Icon } from "lucide-react";
 import React from "react";
+import { toast } from "react-toastify";
 
 const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
   const handleLike = (id) => {
@@ -17,6 +18,11 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
   };
 
   const { onSubmit, isDownloadPending } = useDownloadWallpaper(wallpaper?.id);
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Link copied to clipboard");
+  };
   return (
     <div className="group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105">
       {/* Image */}
@@ -33,7 +39,7 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
           <div className="flex space-x-3">
             <button
               onClick={() => onSubmit(wallpaper?.id)}
-              className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white hover:bg-white/30 transition-colors"
+              className="bg-primary backdrop-blur-sm p-3 rounded-full text-white hover:bg-primary/80 transition-colors"
             >
               {isDownloadPending ? (
                 <LoadingSpinner />
@@ -43,10 +49,10 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
             </button>
             <button
               onClick={() => handleLike(wallpaper?.id)}
-              className={`backdrop-blur-sm p-3 rounded-full transition-colors ${
+              className={`backdrop-blur-sm p-3 rounded-full transition-colors bg-primary ${
                 likedImages.has(wallpaper?.id)
                   ? "bg-red-500/80 text-white"
-                  : "bg-white/20 text-white hover:bg-white/30"
+                  : "bg-red-500 text-white hover:bg-red-500/80"
               }`}
             >
               <Heart
@@ -55,9 +61,13 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
                 }`}
               />
             </button>
-            {/* <button className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white hover:bg-white/30 transition-colors">
-              <MessageCircle className="h-5 w-5" />
-            </button> */}
+            {/* Share Button */}
+            <button
+              onClick={handleShare}
+              className="bg-primary backdrop-blur-sm p-3 rounded-full text-white hover:bg-primary/80 transition-colors"
+            >
+              <Share2Icon className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
@@ -97,10 +107,6 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
               <Download className="h-4 w-4" />
               <span>{wallpaper?.downloadCount}</span>
             </span>
-            {/* <span className="flex items-center space-x-1">
-              <MessageCircle className="h-4 w-4" />
-              <span>{wallpaper?.comments}</span>
-            </span> */}
           </div>
           <span className="flex items-center space-x-1">
             <Calendar className="h-4 w-4" />

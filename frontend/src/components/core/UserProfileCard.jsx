@@ -56,7 +56,7 @@ const UserProfileCard = ({ user, onLogout }) => {
       {isOpen && (
         <div
           ref={cardRef}
-          className="absolute right-0 top-full mt-2 w-72 bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden animate-in slide-in-from-top-2 duration-200"
+          className="absolute right-0 top-full mt-2 w-72 bg-black/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden animate-in slide-in-from-top-2 duration-200"
         >
           {/* Header */}
           <div className="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-white/10">

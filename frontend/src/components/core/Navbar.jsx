@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserProfileCard from "./UserProfileCard";
 import { useLogout } from "@/hooks/auth/useLogin";
+import UploadDialog from "./UploadDialog";
 
 const Navbar = () => {
   const user = useSelector(selectUser);
@@ -35,10 +36,12 @@ const Navbar = () => {
           {/* Navigation */}
           <div className="flex items-center space-x-6">
             {/* Upload Button */}
-            <button className="hidden md:flex text-white/80 hover:text-white transition-colors items-center space-x-2 hover:bg-white/10 px-4 py-2 rounded-full">
-              <Upload className="h-5 w-5" />
-              <span>Upload</span>
-            </button>
+            <UploadDialog>
+              <button className="hidden md:flex text-white/80 hover:text-white transition-colors items-center space-x-2 hover:bg-white/10 px-4 py-2 rounded-full">
+                <Upload className="h-5 w-5" />
+                <span>Upload</span>
+              </button>
+            </UploadDialog>
 
             {/* Search Button - Mobile */}
             <button className="md:hidden text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
