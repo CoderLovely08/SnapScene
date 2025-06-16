@@ -43,4 +43,20 @@ export class WallpaperController {
       next(error);
     }
   }
+
+  /**
+   * Like a wallpaper
+   * @route POST /api/v1/wallpapers/like
+   * @returns {Object} 200 - A wallpaper
+   */
+  static async likeWallpaper(req, res, next) {
+    try {
+      const user = req.user;
+      const { id } = req.body;
+      const wallpaper = await WallpaperService.likeWallpaper(id, user.userId);
+      return APIResponse.success(res, wallpaper, 'Wallpaper liked successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
 }

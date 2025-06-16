@@ -5,6 +5,7 @@ import { AWS_S3_FOLDERS, FILE_KEYS } from '@/utils/constants/app.constant.js';
 import { higherOrderUserDataValidation } from '@/middlewares/validation.middleware.js';
 import { ValidationSchema } from '@/schema/validation.schema.js';
 import { CommonController } from '@/controllers/core/Common.controller.js';
+import { validateToken } from '@/middlewares/auth.middleware.js';
 
 const router = Router();
 
@@ -16,10 +17,13 @@ const router = Router();
 router.get('/get-all', WallpaperController.getAllWallpapers);
 
 /**
- *
+ * Create a wallpaper
+ * @route POST /api/v1/wallpapers/create
+ * @returns {Object} 200 - A wallpaper
  */
 router.post(
   '/create',
+  validateToken,
   upload.single(FILE_KEYS.WALLPAPER),
   higherOrderUserDataValidation(ValidationSchema.wallpaperSchema),
   CommonController.handleUploadFile({
@@ -29,6 +33,18 @@ router.post(
     },
   }),
   WallpaperController.createWallpaper,
+);
+
+/**
+ * Like a wallpaper
+ * @route POST /api/v1/wallpapers/like
+ * @returns {Object} 200 - A wallpaper
+ */
+router.post(
+  '/like',
+  validateToken,
+  higherOrderUserDataValidation(ValidationSchema.idStringSchema),
+  WallpaperController.likeWallpaper,
 );
 
 export default router;

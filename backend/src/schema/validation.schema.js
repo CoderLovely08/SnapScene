@@ -5,6 +5,8 @@ import { validatePhoneNumber } from '@/utils/helpers/app.helpers.js';
 export class ValidationSchema {
   static idSchema = [{ field: 'id', type: VALIDATION_TYPES.INTEGER, required: true }];
 
+  static idStringSchema = [{ field: 'id', type: VALIDATION_TYPES.STRING, required: true }];
+
   // Login Schema
   static loginSchema = [
     { field: 'email', type: VALIDATION_TYPES.EMAIL, required: true },

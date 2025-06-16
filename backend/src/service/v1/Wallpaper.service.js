@@ -33,6 +33,11 @@ export class WallpaperService {
     }
   }
 
+  /**
+   * Create a wallpaper
+   * @route POST /api/v1/wallpapers/create
+   * @returns {Object} 200 - A wallpaper
+   */
   static async createWallpaper(data, userId) {
     try {
       return await prisma.wallpaper.create({
@@ -41,6 +46,51 @@ export class WallpaperService {
           uploader: {
             connect: {
               id: userId,
+            },
+          },
+        },
+      });
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode);
+    }
+  }
+
+  /**
+   * Like a wallpaper
+   * @route POST /api/v1/wallpapers/like
+   * @returns {Object} 200 - A wallpaper
+   */
+  static async likeWallpaper(id, userId) {
+    try {
+      const wallpaper = await prisma.wallpaper.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (!wallpaper) {
+        throw new CustomError('Wallpaper not found', 404);
+      }
+      const like = await prisma.like.findUnique({
+        where: {
+          userId_wallpaperId: {
+            userId,
+            wallpaperId: id,
+          },
+        },
+      });
+      
+      if (like) {
+        throw new CustomError('You have already liked this wallpaper', 400);
+      }
+
+      return await prisma.wallpaper.update({
+        where: {
+          id,
+        },
+        data: {
+          likes: {
+            create: {
+              userId,
             },
           },
         },

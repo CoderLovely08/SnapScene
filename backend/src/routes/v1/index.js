@@ -12,6 +12,6 @@ router.use('/auth', authRoutes);
 router.use('/users', validateToken, userRoutes);
 
 // Wallpaper Routes
-router.use('/wallpapers', validateToken, wallpaperRoutes);
+router.use('/wallpapers', wallpaperRoutes);
 
 export default router;
