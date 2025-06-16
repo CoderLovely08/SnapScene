@@ -1,23 +1,20 @@
 import LoadingSpinner from "@/components/custom/utils/LoadingSpiner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useDownloadWallpaper } from "@/hooks/app/useWallpaper";
+import {
+  useDownloadWallpaper,
+  useLikeWallpaper,
+} from "@/hooks/app/useWallpaper";
 import { getInitials, getTimedifference } from "@/utils/app.utils";
 import { Calendar, Download, Heart, Share2Icon } from "lucide-react";
 import React from "react";
 import { toast } from "react-toastify";
 
 const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
-  const handleLike = (id) => {
-    const newLiked = new Set(likedImages);
-    if (newLiked.has(id)) {
-      newLiked.delete(id);
-    } else {
-      newLiked.add(id);
-    }
-    setLikedImages(newLiked);
-  };
-
   const { onSubmit, isDownloadPending } = useDownloadWallpaper(wallpaper?.id);
+  const { likeWallpaper, isPending } = useLikeWallpaper(wallpaper?.id);
+  const handleLike = (id) => {
+    likeWallpaper(id);
+  };
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -55,11 +52,15 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
                   : "bg-red-500 text-white hover:bg-red-500/80"
               }`}
             >
-              <Heart
-                className={`h-5 w-5 ${
-                  likedImages.has(wallpaper?.id) ? "fill-current" : ""
-                }`}
-              />
+              {isPending ? (
+                <LoadingSpinner spinnerColor="text-white" />
+              ) : (
+                <Heart
+                  className={`h-5 w-5 ${
+                    likedImages.has(wallpaper?.id) ? "fill-current" : ""
+                  }`}
+                />
+              )}
             </button>
             {/* Share Button */}
             <button

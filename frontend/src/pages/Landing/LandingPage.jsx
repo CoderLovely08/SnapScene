@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import Navbar from "@/components/core/Navbar";
 import WallpaperGrid from "./components/WallpaperGrid";
 import UploadDialog from "@/components/core/UploadDialog";
+import { useSelector } from "react-redux";
+import { selectLikes } from "@/store/slices/auth.slice";
 
 const LandingPage = () => {
-  const [likedImages, setLikedImages] = useState(new Set());
+  const likes = useSelector(selectLikes);
+
+  const [likedImages, setLikedImages] = useState(
+    new Set(likes?.map((like) => like.wallpaperId))
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -15,7 +21,7 @@ const LandingPage = () => {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
             Discover
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent block">
+            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent block py-4">
               Amazing Wallpapers
             </span>
           </h1>

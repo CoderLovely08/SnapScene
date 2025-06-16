@@ -24,6 +24,7 @@ export const apiRoutes = {
     GET_ALL: "/wallpapers/get-all",
     DOWNLOAD: "/wallpapers/download",
     UPLOAD: "/wallpapers/create",
+    LIKE: "/wallpapers/like",
   },
 };
 

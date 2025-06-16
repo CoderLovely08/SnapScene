@@ -9,6 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setLikes } from "@/store/slices/auth.slice";
 
 export const useUploadWallpaper = () => {
   const [open, setOpen] = useState(false);
@@ -91,9 +93,9 @@ export const useDownloadWallpaper = (id) => {
         const url = response?.data?.imageUrl;
         const link = document.createElement("a");
         link.href = url;
+        link.target = "_blank";
         link.download = "wallpaper.jpg";
         link.click();
-        toast.success("Wallpaper downloaded");
       },
       onError: (error) => {
         toast.error(error?.message);
@@ -101,4 +103,22 @@ export const useDownloadWallpaper = (id) => {
     });
 
   return { onSubmit, isDownloadPending };
+};
+
+export const useLikeWallpaper = (id) => {
+  const dispatch = useDispatch();
+  const { mutate: likeWallpaper, isPending } = useMutation({
+    mutationFn: (data) =>
+      handlePostRequest(apiRoutes.WALLPAPERS.LIKE, {
+        id,
+      }),
+    onSuccess: (response) => {
+      dispatch(setLikes(response?.data));
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
+  return { likeWallpaper, isPending };
 };

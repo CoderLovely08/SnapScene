@@ -1,6 +1,6 @@
 import { handlePostRequest } from "@/api/common.api";
 import { loginFormSchema, registerFormSchema } from "@/schemas/schemas";
-import { setUser } from "@/store/slices/auth.slice";
+import { clearUser, setUser } from "@/store/slices/auth.slice";
 import { apiRoutes } from "@/utils/api.constants";
 import { routes } from "@/utils/app.constants";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,7 +59,7 @@ export const useLogout = () => {
     mutationFn: () => handlePostRequest(apiRoutes.AUTH.LOGOUT),
 
     onSuccess: () => {
-      dispatch(setUser(null));
+      dispatch(clearUser());
       navigate(routes.AUTH.LOGIN);
       toast.success("Logout successful");
     },
