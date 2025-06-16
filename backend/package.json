@@ -1,0 +1,44 @@
+{
+  "name": "backend-starter",
+  "version": "1.0.0",
+  "description": "This is a starter template for express based api backends",
+  "license": "ISC",
+  "author": "Lovely Sharma",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --import ./loader.js app.js",
+    "dev": "nodemon --import ./loader.js app.js",
+    "seed": "node prisma/seed.js",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "compression": "^1.8.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.11.20",
+    "morgan": "^1.10.0",
+    "prettier": "^3.5.3",
+    "prisma-client": "^0.0.0",
+    "validator": "^13.12.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.25.9",
+    "module-alias": "^2.2.3",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "nodemon": "^3.1.0",
+    "prisma": "^6.4.1"
+  },
+  "_moduleAliases": {
+    "@": "src"
+  }
+}

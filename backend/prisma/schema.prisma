@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+model SystemUser {
+  id                  Int              @id @default(autoincrement())
+  email               String           @unique
+  password            String
+  fullName            String
+  userType            UserType         @relation(fields: [userTypeId], references: [id])
+  userTypeId          Int
+  isActive            Boolean          @default(true)
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+  permissions         UserPermission[]
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+}
+
+model UserType {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?
+  isActive    Boolean      @default(true)
+  users       SystemUser[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Permission {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  slug            String           @unique
+  description     String?
+  userPermissions UserPermission[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// Direct permission assignment for users
+model UserPermission {
+  id           Int        @id @default(autoincrement())
+  user         SystemUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([userId, permissionId])
+}
