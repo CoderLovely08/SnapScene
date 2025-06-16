@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/utils/app.utils";
-import { LogOut, User, Settings, Heart, Download } from "lucide-react";
+import { LogOut, User, Settings, Heart, Download, Image } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
 const UserProfileCard = ({ user, onLogout }) => {
@@ -97,19 +97,19 @@ const UserProfileCard = ({ user, onLogout }) => {
                 <div className="flex items-center justify-center space-x-2 text-pink-400">
                   <Heart className="h-4 w-4" />
                   <span className="text-white font-semibold">
-                    {user?.likedWallpapers?.length || 0}
+                    {user?.likes?.length || 0}
                   </span>
                 </div>
                 <p className="text-white/50 text-xs mt-1">Liked</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center space-x-2 text-purple-400">
-                  <Download className="h-4 w-4" />
+                  <Image className="h-4 w-4" />
                   <span className="text-white font-semibold">
-                    {user?.downloadCount || 0}
+                    {user?.wallpapers?.length || 0}
                   </span>
                 </div>
-                <p className="text-white/50 text-xs mt-1">Downloads</p>
+                <p className="text-white/50 text-xs mt-1">Wallpapers</p>
               </div>
             </div>
           </div>
