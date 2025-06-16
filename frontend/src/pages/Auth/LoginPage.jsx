@@ -1,3 +1,4 @@
+import Navbar from "@/components/core/Navbar";
 import LoadingSpinner from "@/components/custom/utils/LoadingSpiner";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { useLogin } from "@/hooks/auth/useLogin";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
@@ -18,20 +20,15 @@ export default function LoginForm() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-full">
+      <Navbar />
       <main className="container flex items-center justify-center h-screen mx-auto px-6 py-4">
         <div className="w-full max-w-md">
-          {/* Logo Area */}
-          <div className="mb-4 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary text-white mb-2">
-              <Lock className="w-8 h-8" />
-            </div>
-            <h1 className="text-2xl font-semibold text-gray-900">
-              Login Portal
-            </h1>
-          </div>
           {/* Card */}
-          <div className="bg-white rounded-xl shadow-lg p-8 ring-1 ring-gray-200">
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 w-full max-w-md border border-white/20">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">Sign In</h2>
+            </div>
             <Form {...adminLoginForm}>
               <form
                 onSubmit={adminLoginForm.handleSubmit(onSubmit)}
@@ -92,6 +89,16 @@ export default function LoginForm() {
                 </Button>
               </form>
             </Form>
+
+            <div className="mt-4 text-center">
+              <Separator className="bg-white/20 my-2" />
+              <p className="text-white/60">
+                Don't have an account?{" "}
+                <button className="text-purple-400 hover:text-purple-300 font-medium">
+                  Sign up
+                </button>
+              </p>
+            </div>
           </div>
         </div>
       </main>

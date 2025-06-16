@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -13,52 +11,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// schema.prisma
-
 model SystemUser {
-  id                  Int              @id @default(autoincrement())
-  email               String           @unique
+  id                  Int         @id @default(autoincrement())
+  email               String      @unique
   password            String
   fullName            String
-  userType            UserType         @relation(fields: [userTypeId], references: [id])
-  userTypeId          Int
-  isActive            Boolean          @default(true)
+  userTypeId          Int         @default(1) // 1 = user, 2 = admin
+  isActive            Boolean     @default(true)
   resetToken          String?
   resetTokenExpiresAt DateTime?
-  permissions         UserPermission[]
-  createdAt           DateTime         @default(now())
-  updatedAt           DateTime         @updatedAt
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  wallpapers          Wallpaper[]
+  comments            Comment[]
+  likes               Like[]
 }
 
-model UserType {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  description String?
-  isActive    Boolean      @default(true)
-  users       SystemUser[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+model Wallpaper {
+  id           String    @id @default(uuid())
+  title        String
+  imageUrl     String    // S3 URL or CloudFront URL
+  category     String    @default("Other") // Simple string: "Nature", "Urban", etc.
+  downloadCount Int      @default(0)
+  uploadedAt   DateTime  @default(now())
+  uploader     SystemUser @relation(fields: [uploaderId], references: [id])
+  uploaderId   Int
+  tags         Tag[]     @relation("WallpaperTags")
+  comments     Comment[]
+  likes        Like[]
 }
 
-model Permission {
-  id              Int              @id @default(autoincrement())
-  name            String           @unique
-  slug            String           @unique
-  description     String?
-  userPermissions UserPermission[]
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+model Tag {
+  id         String      @id @default(uuid())
+  name       String      @unique
+  wallpapers Wallpaper[] @relation("WallpaperTags")
 }
 
-// Direct permission assignment for users
-model UserPermission {
-  id           Int        @id @default(autoincrement())
-  user         SystemUser @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       Int
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-  permissionId Int
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+model Comment {
+  id          String     @id @default(uuid())
+  content     String
+  createdAt   DateTime   @default(now())
+  user        SystemUser @relation(fields: [userId], references: [id])
+  userId      Int
+  wallpaper   Wallpaper  @relation(fields: [wallpaperId], references: [id])
+  wallpaperId String
+}
 
-  @@unique([userId, permissionId])
+model Like {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  user        SystemUser @relation(fields: [userId], references: [id])
+  userId      Int
+  wallpaper   Wallpaper  @relation(fields: [wallpaperId], references: [id])
+  wallpaperId String
+
+  @@unique([userId, wallpaperId])
 }

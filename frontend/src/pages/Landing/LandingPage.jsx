@@ -1,12 +1,39 @@
-import React, { useState } from 'react';
-import { Heart, Download, MessageCircle, Search, User, Upload, Menu, X, Filter, Grid, Eye, Calendar, Tag } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Heart,
+  Download,
+  MessageCircle,
+  Search,
+  User,
+  Upload,
+  Menu,
+  X,
+  Filter,
+  Grid,
+  Eye,
+  Calendar,
+  Tag,
+} from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Navbar from "@/components/core/Navbar";
 
 const LandingPage = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [likedImages, setLikedImages] = useState(new Set());
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Dummy wallpaper data
   const wallpapers = [
@@ -14,86 +41,98 @@ const LandingPage = () => {
       id: 1,
       title: "Neon Cityscape",
       author: "Alex Chen",
-      authorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
-      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop",
+      authorAvatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop",
       category: "Urban",
       likes: 1247,
       downloads: 892,
       comments: 23,
       tags: ["neon", "city", "night", "urban"],
       uploadDate: "2 days ago",
-      resolution: "4K"
+      resolution: "4K",
     },
     {
       id: 2,
       title: "Mountain Serenity",
       author: "Sarah Wilson",
-      authorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+      authorAvatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
       category: "Nature",
       likes: 2134,
       downloads: 1456,
       comments: 67,
       tags: ["mountain", "landscape", "nature", "peaceful"],
       uploadDate: "1 week ago",
-      resolution: "8K"
+      resolution: "8K",
     },
     {
       id: 3,
       title: "Abstract Gradient",
       author: "David Park",
-      authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+      authorAvatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
       category: "Abstract",
       likes: 756,
       downloads: 523,
       comments: 12,
       tags: ["gradient", "abstract", "colorful", "modern"],
       uploadDate: "3 days ago",
-      resolution: "4K"
+      resolution: "4K",
     },
     {
       id: 4,
       title: "Ocean Waves",
       author: "Emma Torres",
-      authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
-      image: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&h=600&fit=crop",
+      authorAvatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&h=600&fit=crop",
       category: "Nature",
       likes: 1823,
       downloads: 1234,
       comments: 45,
       tags: ["ocean", "waves", "blue", "calming"],
       uploadDate: "5 days ago",
-      resolution: "6K"
+      resolution: "6K",
     },
     {
       id: 5,
       title: "Space Nebula",
       author: "Marcus Kim",
-      authorAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face",
-      image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop",
+      authorAvatar:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop",
       category: "Space",
       likes: 3421,
       downloads: 2156,
       comments: 89,
       tags: ["space", "nebula", "stars", "cosmic"],
       uploadDate: "1 day ago",
-      resolution: "8K"
+      resolution: "8K",
     },
     {
       id: 6,
       title: "Forest Path",
       author: "Lisa Chen",
-      authorAvatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop",
+      authorAvatar:
+        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop",
       category: "Nature",
       likes: 967,
       downloads: 678,
       comments: 34,
       tags: ["forest", "path", "green", "tranquil"],
       uploadDate: "4 days ago",
-      resolution: "4K"
-    }
+      resolution: "4K",
+    },
   ];
 
   const categories = ["All", "Nature", "Urban", "Abstract", "Space", "Minimal"];
@@ -108,67 +147,20 @@ const LandingPage = () => {
     setLikedImages(newLiked);
   };
 
-  const filteredWallpapers = wallpapers.filter(wallpaper => {
-    const matchesCategory = selectedCategory === 'All' || wallpaper.category === selectedCategory;
-    const matchesSearch = wallpaper.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         wallpaper.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredWallpapers = wallpapers.filter((wallpaper) => {
+    const matchesCategory =
+      selectedCategory === "All" || wallpaper.category === selectedCategory;
+    const matchesSearch =
+      wallpaper.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      wallpaper.tags.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     return matchesCategory && matchesSearch;
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">S</span>
-              </div>
-              <span className="text-white text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                SnapScene
-              </span>
-            </div>
-
-            {/* Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-lg mx-8">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Search wallpapers, tags, or creators..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-full px-6 py-2 pl-12 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                />
-                <Search className="absolute left-4 top-2.5 h-5 w-5 text-white/60" />
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
-              <button className="text-white/80 hover:text-white transition-colors flex items-center space-x-2">
-                <Upload className="h-5 w-5" />
-                <span>Upload</span>
-              </button>
-              <button
-                onClick={() => setIsLoginOpen(true)}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105"
-              >
-                Sign In
-              </button>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-white p-2"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Mobile Menu */}
       {isMenuOpen && (
@@ -208,8 +200,9 @@ const LandingPage = () => {
             </span>
           </h1>
           <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-            Upload, explore, and download stunning wallpapers from creators around the world. 
-            Join our community and share your visual masterpieces.
+            Upload, explore, and download stunning wallpapers from creators
+            around the world. Join our community and share your visual
+            masterpieces.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
@@ -232,8 +225,8 @@ const LandingPage = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   selectedCategory === category
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                    : 'bg-white/10 text-white/80 hover:bg-white/20'
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                    : "bg-white/10 text-white/80 hover:bg-white/20"
                 }`}
               >
                 {category}
@@ -260,7 +253,7 @@ const LandingPage = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
+
                   {/* Overlay Actions */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex space-x-3">
@@ -271,11 +264,15 @@ const LandingPage = () => {
                         onClick={() => handleLike(wallpaper.id)}
                         className={`backdrop-blur-sm p-3 rounded-full transition-colors ${
                           likedImages.has(wallpaper.id)
-                            ? 'bg-red-500/80 text-white'
-                            : 'bg-white/20 text-white hover:bg-white/30'
+                            ? "bg-red-500/80 text-white"
+                            : "bg-white/20 text-white hover:bg-white/30"
                         }`}
                       >
-                        <Heart className={`h-5 w-5 ${likedImages.has(wallpaper.id) ? 'fill-current' : ''}`} />
+                        <Heart
+                          className={`h-5 w-5 ${
+                            likedImages.has(wallpaper.id) ? "fill-current" : ""
+                          }`}
+                        />
                       </button>
                       <button className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white hover:bg-white/30 transition-colors">
                         <MessageCircle className="h-5 w-5" />
@@ -298,8 +295,12 @@ const LandingPage = () => {
                       className="w-8 h-8 rounded-full"
                     />
                     <div>
-                      <h3 className="text-white font-semibold text-lg">{wallpaper.title}</h3>
-                      <p className="text-white/60 text-sm">by {wallpaper.author}</p>
+                      <h3 className="text-white font-semibold text-lg">
+                        {wallpaper.title}
+                      </h3>
+                      <p className="text-white/60 text-sm">
+                        by {wallpaper.author}
+                      </p>
                     </div>
                   </div>
 
@@ -356,7 +357,7 @@ const LandingPage = () => {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <input
@@ -372,16 +373,14 @@ const LandingPage = () => {
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
-              <button
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition-all"
-              >
+              <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition-all">
                 Sign In
               </button>
             </div>
-            
+
             <div className="mt-6 text-center">
               <p className="text-white/60">
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <button className="text-purple-400 hover:text-purple-300 font-medium">
                   Sign up
                 </button>

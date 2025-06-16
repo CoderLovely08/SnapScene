@@ -25,23 +25,6 @@ export class AuthService {
           fullName: true,
           email: true,
           password: true,
-          userType: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-          permissions: {
-            select: {
-              permission: {
-                select: {
-                  id: true,
-                  name: true,
-                  slug: true,
-                },
-              },
-            },
-          },
         },
       });
 
@@ -82,11 +65,6 @@ export class AuthService {
           email,
           password: hashedPassword,
           fullName,
-          userType: {
-            connect: {
-              id: userTypeId,
-            },
-          },
         },
       });
 
