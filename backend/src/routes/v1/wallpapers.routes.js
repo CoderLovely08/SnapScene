@@ -47,4 +47,16 @@ router.post(
   WallpaperController.likeWallpaper,
 );
 
+/**
+ * Download a wallpaper
+ * @route POST /api/v1/wallpapers/download
+ * @returns {Object} 200 - A wallpaper
+ */
+router.post(
+  '/download',
+  validateToken,
+  higherOrderUserDataValidation(ValidationSchema.idStringSchema),
+  WallpaperController.downloadWallpaper,
+);
+
 export default router;

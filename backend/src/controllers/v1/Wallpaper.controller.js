@@ -59,4 +59,22 @@ export class WallpaperController {
       next(error);
     }
   }
+
+  /**
+   * Download a wallpaper
+   * @route POST /api/v1/wallpapers/download
+   * @returns {Object} 200 - A wallpaper
+   */
+  static async downloadWallpaper(req, res, next) {
+    try {
+      const user = req.user;
+      const { id } = req.body;
+      const wallpaper = await WallpaperService.downloadWallpaper(id, user.userId);
+
+      res.download(wallpaper.imageUrl);
+      return APIResponse.success(res, wallpaper, 'Wallpaper downloaded successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
 }

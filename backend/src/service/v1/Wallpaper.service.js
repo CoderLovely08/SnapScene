@@ -78,7 +78,7 @@ export class WallpaperService {
           },
         },
       });
-      
+
       if (like) {
         throw new CustomError('You have already liked this wallpaper', 400);
       }
@@ -92,6 +92,36 @@ export class WallpaperService {
             create: {
               userId,
             },
+          },
+        },
+      });
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode);
+    }
+  }
+
+  /**
+   * Download a wallpaper
+   * @route POST /api/v1/wallpapers/download
+   * @returns {Object} 200 - A wallpaper
+   */
+  static async downloadWallpaper(id, userId) {
+    try {
+      const wallpaper = await prisma.wallpaper.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (!wallpaper) {
+        throw new CustomError('Wallpaper not found', 404);
+      }
+      return await prisma.wallpaper.update({
+        where: {
+          id,
+        },
+        data: {
+          downloadCount: {
+            increment: 1,
           },
         },
       });
