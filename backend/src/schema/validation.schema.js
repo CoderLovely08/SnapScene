@@ -104,4 +104,23 @@ export class ValidationSchema {
       arrayType: VALIDATION_TYPES.INTEGER,
     },
   ];
+
+  // Wallpaper Schema
+  static wallpaperSchema = [
+    { field: 'title', type: VALIDATION_TYPES.STRING, required: true },
+    { field: 'description', type: VALIDATION_TYPES.STRING, required: false },
+    { field: 'category', type: VALIDATION_TYPES.STRING, required: true },
+    {
+      field: 'quality',
+      type: VALIDATION_TYPES.CUSTOM,
+      required: true,
+      validate: (value) => {
+        const isValid = value.match(/^(HD|4K|8K)$/);
+        if (!isValid) {
+          throw new CustomError('Invalid quality, must be HD, 4K, or 8K', 400);
+        }
+        return isValid;
+      },
+    },
+  ];
 }

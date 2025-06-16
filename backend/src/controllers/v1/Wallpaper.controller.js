@@ -1,5 +1,6 @@
 import { APIResponse } from '@/service/core/CustomResponse.js';
 import { WallpaperService } from '@/service/v1/Wallpaper.service.js';
+import { FILE_KEYS } from '@/utils/constants/app.constant.js';
 
 export class WallpaperController {
   /**
@@ -11,6 +12,33 @@ export class WallpaperController {
     try {
       const wallpapers = await WallpaperService.getAllWallpapers();
       return APIResponse.success(res, wallpapers, 'Wallpapers fetched successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Create a wallpaper
+   * @route POST /api/v1/wallpapers/create
+   * @returns {Object} 200 - A wallpaper
+   */
+  static async createWallpaper(req, res, next) {
+    try {
+      const user = req.user;
+
+      const { title, description, category, quality } = req.body;
+      const { url } = req.files[FILE_KEYS.WALLPAPER];
+      const wallpaper = await WallpaperService.createWallpaper(
+        {
+          title,
+          description,
+          category,
+          quality,
+          imageUrl: url,
+        },
+        user.userId,
+      );
+      return APIResponse.success(res, wallpaper, 'Wallpaper created successfully');
     } catch (error) {
       next(error);
     }

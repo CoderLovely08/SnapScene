@@ -17,9 +17,32 @@ export class WallpaperService {
           category: true,
           downloadCount: true,
           uploadedAt: true,
-          uploader: true,
+          uploader: {
+            select: {
+              id: true,
+              email: true,
+              fullName: true,
+            },
+          },
           likes: true,
           comments: true,
+        },
+      });
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode);
+    }
+  }
+
+  static async createWallpaper(data, userId) {
+    try {
+      return await prisma.wallpaper.create({
+        data: {
+          ...data,
+          uploader: {
+            connect: {
+              id: userId,
+            },
+          },
         },
       });
     } catch (error) {
