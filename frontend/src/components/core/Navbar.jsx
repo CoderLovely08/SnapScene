@@ -44,9 +44,11 @@ const Navbar = () => {
             </UploadDialog>
 
             {/* Search Button - Mobile */}
-            <button className="md:hidden text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
-              <Search className="h-5 w-5" />
-            </button>
+            <UploadDialog>
+              <button className="md:hidden text-white/80 hover:text-white transition-colors items-center space-x-2 hover:bg-white/10 px-4 py-2 rounded-full">
+                <Upload className="h-5 w-5" />
+              </button>
+            </UploadDialog>
 
             {/* User Section */}
             {user ? (
