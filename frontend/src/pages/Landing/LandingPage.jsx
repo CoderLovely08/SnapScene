@@ -35,6 +35,8 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <WallpaperGrid />
+
       {/* Footer */}
       <footer className="bg-black/20 backdrop-blur-xl border-t border-white/10 py-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
