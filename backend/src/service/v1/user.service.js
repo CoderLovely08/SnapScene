@@ -13,18 +13,6 @@ export class UserService {
           id: true,
           fullName: true,
           email: true,
-          userType: {
-            select: {
-              name: true,
-            },
-          },
-          permissions: {
-            select: {
-              permission: {
-                select: { id: true, name: true, slug: true },
-              },
-            },
-          },
           createdAt: true,
         },
       });
@@ -51,26 +39,10 @@ export class UserService {
           id: true,
           fullName: true,
           email: true,
-          userType: {
-            select: { name: true },
-          },
-          permissions: {
-            select: {
-              permission: {
-                select: {
-                  id: true,
-                  name: true,
-                  slug: true,
-                },
-              },
-            },
-          },
           createdAt: true,
         },
       });
-
-      const userPermissions = user.permissions.map((permission) => permission.permission);
-      return { ...user, permissions: userPermissions };
+      return { ...user };
     } catch (error) {
       throw new CustomError(error.message, error.statusCode);
     }

@@ -11,6 +11,7 @@ export class WallpaperController {
   static async getAllWallpapers(req, res, next) {
     try {
       const wallpapers = await WallpaperService.getAllWallpapers();
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return APIResponse.success(res, wallpapers, 'Wallpapers fetched successfully');
     } catch (error) {
       next(error);
@@ -71,7 +72,6 @@ export class WallpaperController {
       const { id } = req.body;
       const wallpaper = await WallpaperService.downloadWallpaper(id, user.userId);
 
-      res.download(wallpaper.imageUrl);
       return APIResponse.success(res, wallpaper, 'Wallpaper downloaded successfully');
     } catch (error) {
       next(error);

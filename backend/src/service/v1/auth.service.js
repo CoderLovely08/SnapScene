@@ -25,6 +25,12 @@ export class AuthService {
           fullName: true,
           email: true,
           password: true,
+          likes: {
+            select: {
+              wallpaperId: true,
+            },
+          },
+          wallpapers: true,
         },
       });
 
@@ -40,9 +46,7 @@ export class AuthService {
 
       delete user.password;
 
-      const userPermissions = user?.permissions?.map((permission) => permission?.permission?.slug);
-
-      return { ...user, permissions: userPermissions };
+      return user;
     } catch (error) {
       throw new CustomError(error.message);
     }

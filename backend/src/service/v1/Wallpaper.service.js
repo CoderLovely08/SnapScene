@@ -15,6 +15,7 @@ export class WallpaperService {
           description: true,
           imageUrl: true,
           category: true,
+          quality: true,
           downloadCount: true,
           uploadedAt: true,
           uploader: {
@@ -83,7 +84,7 @@ export class WallpaperService {
         throw new CustomError('You have already liked this wallpaper', 400);
       }
 
-      return await prisma.wallpaper.update({
+      await prisma.wallpaper.update({
         where: {
           id,
         },
@@ -93,6 +94,15 @@ export class WallpaperService {
               userId,
             },
           },
+        },
+      });
+
+      return await prisma.like.findMany({
+        where: {
+          userId,
+        },
+        select: {
+          wallpaperId: true,
         },
       });
     } catch (error) {

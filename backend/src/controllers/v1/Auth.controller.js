@@ -168,4 +168,20 @@ export class AuthController {
       return APIResponse.error(res, error.message, error.statusCode);
     }
   }
+
+  // ----------------------------------------------------------
+  // Logout
+  // ----------------------------------------------------------
+
+  static async handlePostLogout(req, res) {
+    try {
+      res.clearCookie(TOKEN_TYPES.REFRESH);
+      res.clearCookie(TOKEN_TYPES.ACCESS);
+
+      return APIResponse.success(res, null, 'User logged out successfully');
+    } catch (error) {
+      console.error(`Error in handleLogout: ${error.message}`);
+      return APIResponse.error(res, error.message, error.statusCode);
+    }
+  }
 }

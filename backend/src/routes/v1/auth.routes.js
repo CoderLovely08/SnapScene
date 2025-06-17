@@ -34,4 +34,10 @@ router.post(
   AuthController.handlePostSystemUserRegistration,
 );
 
+/**
+ * Handle post system user logout
+ * Route: /api/v1/auth/system/logout
+ */
+router.post('/system/logout', AuthController.handlePostLogout);
+
 export default router;
