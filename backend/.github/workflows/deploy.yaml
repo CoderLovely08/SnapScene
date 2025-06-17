@@ -29,7 +29,7 @@ jobs:
             git config --global url."git@github.com:".insteadOf "https://github.com/"
 
             # Navigate to the project folder
-            cd Pediasense-API-Server
+            cd SnapScene
 
             # Pull the latest changes
             git pull origin main
