@@ -1,6 +1,6 @@
 import { handlePostRequest } from "@/api/common.api";
 import { loginFormSchema, registerFormSchema } from "@/schemas/schemas";
-import { clearUser, setUser } from "@/store/slices/auth.slice";
+import { clearUser, setLikes, setUser } from "@/store/slices/auth.slice";
 import { apiRoutes } from "@/utils/api.constants";
 import { routes } from "@/utils/app.constants";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,6 +31,7 @@ export const useLogin = () => {
 
     onSuccess: (data) => {
       dispatch(setUser(data?.data));
+      dispatch(setLikes(data?.data?.likes));
       navigate(routes.CORE.path);
       toast.success("Login successful");
     },

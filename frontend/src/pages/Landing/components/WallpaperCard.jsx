@@ -10,7 +10,10 @@ import React from "react";
 import { toast } from "react-toastify";
 
 const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
-  const { onSubmit, isDownloadPending } = useDownloadWallpaper(wallpaper?.id);
+  const { onSubmit, isDownloadPending } = useDownloadWallpaper(
+    wallpaper?.id,
+    wallpaper?.imageUrl
+  );
   const { likeWallpaper, isPending } = useLikeWallpaper(wallpaper?.id);
   const handleLike = (id) => {
     likeWallpaper(id);

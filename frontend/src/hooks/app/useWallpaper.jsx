@@ -9,8 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setLikes } from "@/store/slices/auth.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setLikes } from "@/store/slices/auth.slice";
 
 export const useUploadWallpaper = () => {
   const [open, setOpen] = useState(false);
@@ -62,10 +62,19 @@ export const useUploadWallpaper = () => {
   return { uploadForm, onSubmit, isUploadPending, open, setOpen };
 };
 
-export const useDownloadWallpaper = (id) => {
+export const useDownloadWallpaper = (id, downloadLink) => {
   const queryClient = useQueryClient();
+  const user = useSelector(selectUser);
   const onSubmit = () => {
-    downloadWallpaper();
+    if (user) {
+      downloadWallpaper();
+    } else {
+      const link = document.createElement("a");
+      link.href = downloadLink;
+      link.target = "_blank";
+      link.download = "wallpaper.jpg";
+      link.click();
+    }
   };
 
   const { mutate: downloadWallpaper, isPending: isDownloadPending } =

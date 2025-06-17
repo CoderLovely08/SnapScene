@@ -22,7 +22,6 @@ const authSlice = createSlice({
       localStorage.removeItem("likes");
     },
     setLikes(state, action) {
-      console.log(action.payload);
       state.likes = action.payload;
       localStorage.setItem("likes", JSON.stringify(action.payload));
     },

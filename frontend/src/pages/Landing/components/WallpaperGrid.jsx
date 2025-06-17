@@ -5,7 +5,12 @@ import WallpaperCard from "./WallpaperCard";
 import WallpaperCardSkeleton from "./WallpaperCardSkeleton";
 import NoWallpapersFound from "./NoWallpaperFound";
 
-const WallpaperGrid = ({ likedImages, setLikedImages }) => {
+const WallpaperGrid = () => {
+  const likes = useSelector(selectLikes);
+
+  const [likedImages, setLikedImages] = useState(
+    new Set(likes?.map((like) => like.wallpaperId))
+  );
   const [selectedCategory, setSelectedCategory] = useState("All");
   const { responseData: wallpapers, responseIsLoading } = useFetch(
     apiRoutes.WALLPAPERS.GET_ALL,

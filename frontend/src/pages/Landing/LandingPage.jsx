@@ -2,16 +2,8 @@ import React, { useState } from "react";
 import Navbar from "@/components/core/Navbar";
 import WallpaperGrid from "./components/WallpaperGrid";
 import UploadDialog from "@/components/core/UploadDialog";
-import { useSelector } from "react-redux";
-import { selectLikes } from "@/store/slices/auth.slice";
 
 const LandingPage = () => {
-  const likes = useSelector(selectLikes);
-
-  const [likedImages, setLikedImages] = useState(
-    new Set(likes?.map((like) => like.wallpaperId))
-  );
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navbar />
@@ -42,11 +34,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
-      <WallpaperGrid
-        likedImages={likedImages}
-        setLikedImages={setLikedImages}
-      />
 
       {/* Footer */}
       <footer className="bg-black/20 backdrop-blur-xl border-t border-white/10 py-12">
