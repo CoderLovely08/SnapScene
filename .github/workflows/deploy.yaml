@@ -34,6 +34,9 @@ jobs:
             # Pull the latest changes
             git pull origin main
 
+            # Navigate to the backend folder
+            cd backend
+
             # Install dependencies
             npm install
 
