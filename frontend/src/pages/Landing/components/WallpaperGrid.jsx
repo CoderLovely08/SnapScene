@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import WallpaperCard from "./WallpaperCard";
 import WallpaperCardSkeleton from "./WallpaperCardSkeleton";
 import NoWallpapersFound from "./NoWallpaperFound";
+import { useSelector } from "react-redux";
+import { selectLikes } from "@/store/slices/auth.slice";
 
 const WallpaperGrid = () => {
   const likes = useSelector(selectLikes);
