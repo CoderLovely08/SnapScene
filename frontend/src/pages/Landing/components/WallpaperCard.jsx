@@ -5,9 +5,10 @@ import {
   useLikeWallpaper,
 } from "@/hooks/app/useWallpaper";
 import { getInitials, getTimedifference } from "@/utils/app.utils";
-import { Calendar, Download, Heart, Share2Icon } from "lucide-react";
+import { Calendar, Download, Heart, MessageCircle, Share2Icon } from "lucide-react";
 import React from "react";
 import { toast } from "react-toastify";
+import CommentsDialog from "@/components/core/CommentsDialog";
 
 const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
   const { onSubmit, isDownloadPending } = useDownloadWallpaper(
@@ -111,6 +112,12 @@ const WallpaperCard = ({ wallpaper, likedImages, setLikedImages }) => {
               <Download className="h-4 w-4" />
               <span>{wallpaper?.downloadCount}</span>
             </span>
+            <CommentsDialog wallpaperId={wallpaper?.id}>
+              <button className="flex items-center space-x-1 hover:text-white transition-colors">
+                <MessageCircle className="h-4 w-4" />
+                <span>{wallpaper?.comments?.length || 0}</span>
+              </button>
+            </CommentsDialog>
           </div>
           <span className="flex items-center space-x-1">
             <Calendar className="h-4 w-4" />

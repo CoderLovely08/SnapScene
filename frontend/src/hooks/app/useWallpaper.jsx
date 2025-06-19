@@ -1,6 +1,6 @@
 import { handlePostRequest } from "@/api/common.api";
 import { apiRoutes, QUERY_KEYS } from "@/utils/api.constants";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 import { uploadWallpaperSchema } from "@/schemas/schemas";
@@ -130,4 +130,40 @@ export const useLikeWallpaper = (id) => {
   });
 
   return { likeWallpaper, isPending };
+};
+
+export const useComments = (wallpaperId, enabled = true) => {
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: [QUERY_KEYS.WALLPAPERS.GET_ALL, "comments", wallpaperId],
+    queryFn: () =>
+      handlePostRequest(apiRoutes.WALLPAPERS.GET_COMMENTS, { wallpaperId }),
+    enabled: enabled && !!wallpaperId,
+  });
+
+  return {
+    comments: data?.data || [],
+    isLoading,
+    refetch,
+  };
+};
+
+export const useCreateComment = () => {
+  const queryClient = useQueryClient();
+  
+  const { mutate: createComment, isPending: isCreating } = useMutation({
+    mutationFn: (data) =>
+      handlePostRequest(apiRoutes.WALLPAPERS.COMMENT, data),
+    onSuccess: (response, variables) => {
+      // Invalidate and refetch comments for this wallpaper
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.WALLPAPERS.GET_ALL, "comments", variables.wallpaperId],
+      });
+      toast.success("Comment added successfully!");
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to add comment");
+    },
+  });
+
+  return { createComment, isCreating };
 };
