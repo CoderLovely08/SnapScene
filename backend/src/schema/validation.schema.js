@@ -125,4 +125,14 @@ export class ValidationSchema {
       },
     },
   ];
+
+  // Comment Schema
+  static createCommentSchema = [
+    { field: 'wallpaperId', type: VALIDATION_TYPES.STRING, required: true },
+    { field: 'content', type: VALIDATION_TYPES.STRING, required: true },
+  ];
+
+  static getCommentsSchema = [
+    { field: 'wallpaperId', type: VALIDATION_TYPES.STRING, required: true },
+  ];
 }

@@ -11,7 +11,7 @@ export class WallpaperController {
   static async getAllWallpapers(req, res, next) {
     try {
       const wallpapers = await WallpaperService.getAllWallpapers();
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       return APIResponse.success(res, wallpapers, 'Wallpapers fetched successfully');
     } catch (error) {
       next(error);
@@ -73,6 +73,37 @@ export class WallpaperController {
       const wallpaper = await WallpaperService.downloadWallpaper(id, user.userId);
 
       return APIResponse.success(res, wallpaper, 'Wallpaper downloaded successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Create a comment on a wallpaper
+   * @route POST /api/v1/wallpapers/comment
+   * @returns {Object} 200 - A comment
+   */
+  static async createComment(req, res, next) {
+    try {
+      const user = req.user;
+      const { wallpaperId, content } = req.body;
+      const comment = await WallpaperService.createComment(wallpaperId, user.userId, content);
+      return APIResponse.success(res, comment, 'Comment created successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Get comments for a wallpaper
+   * @route POST /api/v1/wallpapers/comments
+   * @returns {Object} 200 - List of comments
+   */
+  static async getComments(req, res, next) {
+    try {
+      const { wallpaperId } = req.body;
+      const comments = await WallpaperService.getComments(wallpaperId);
+      return APIResponse.success(res, comments, 'Comments fetched successfully');
     } catch (error) {
       next(error);
     }

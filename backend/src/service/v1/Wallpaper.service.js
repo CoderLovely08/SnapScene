@@ -139,4 +139,80 @@ export class WallpaperService {
       throw new CustomError(error.message, error.statusCode);
     }
   }
+
+  /**
+   * Create a comment on a wallpaper
+   * @param {string} wallpaperId - The wallpaper ID
+   * @param {number} userId - The user ID
+   * @param {string} content - The comment content
+   * @returns {Object} The created comment
+   */
+  static async createComment(wallpaperId, userId, content) {
+    try {
+      const wallpaper = await prisma.wallpaper.findUnique({
+        where: {
+          id: wallpaperId,
+        },
+      });
+      if (!wallpaper) {
+        throw new CustomError('Wallpaper not found', 404);
+      }
+
+      return await prisma.comment.create({
+        data: {
+          content,
+          wallpaper: {
+            connect: {
+              id: wallpaperId,
+            },
+          },
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              fullName: true,
+              email: true,
+            },
+          },
+        },
+      });
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode);
+    }
+  }
+
+  /**
+   * Get comments for a wallpaper
+   * @param {string} wallpaperId - The wallpaper ID
+   * @returns {Array} List of comments
+   */
+  static async getComments(wallpaperId) {
+    try {
+      return await prisma.comment.findMany({
+        where: {
+          wallpaperId,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              fullName: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode);
+    }
+  }
 }

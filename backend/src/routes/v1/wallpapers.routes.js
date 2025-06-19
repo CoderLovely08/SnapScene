@@ -59,4 +59,27 @@ router.post(
   WallpaperController.downloadWallpaper,
 );
 
+/**
+ * Create a comment on a wallpaper
+ * @route POST /api/v1/wallpapers/comment
+ * @returns {Object} 200 - A comment
+ */
+router.post(
+  '/comment',
+  validateToken,
+  higherOrderUserDataValidation(ValidationSchema.createCommentSchema),
+  WallpaperController.createComment,
+);
+
+/**
+ * Get comments for a wallpaper
+ * @route POST /api/v1/wallpapers/comments
+ * @returns {Object} 200 - List of comments
+ */
+router.post(
+  '/comments',
+  higherOrderUserDataValidation(ValidationSchema.getCommentsSchema),
+  WallpaperController.getComments,
+);
+
 export default router;
