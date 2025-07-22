@@ -1,6 +1,6 @@
 # 📸 SnapScene – Cloud-Based Wallpaper Sharing Platform
 
-**SnapScene** is a beginner-friendly, cloud-native web application designed for users to upload, explore, and interact with high-quality wallpapers. It leverages **AWS** services and a modern web stack to provide a seamless user experience while serving as a strong foundation for learning full-stack and cloud deployment principles.
+**SnapScene** is a beginner-friendly, cloud-native web application that allows users to upload, explore, and interact with high-quality wallpapers. Built using a modern full-stack architecture and deployed on AWS, this project was created to help others learn how to develop and deploy an end-to-end web application using real-world tools and cloud infrastructure. SnapScene serves as both a functional app and an educational resource for anyone looking to understand full-stack development and AWS deployment in practice.
 
 ---
 
